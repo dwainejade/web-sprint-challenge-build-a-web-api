@@ -16,6 +16,19 @@ router.get("/projects", (req, res) => {
         })
 })
 
+// GET PROJECT BY ID
+router.get("/projects/:id", validateProjectId, (req, res) => {
+    projects.get(req.params.id)
+        .then((project) => {
+            res.json(project)
+        })
+        .catch(() => {
+            res.status(500).json({
+                message: "There was an error retrieving this project.",
+            })
+        })
+})
+
 // POST PROJECT
 router.post("/projects", validateProjectData, (req, res) => {
     projects.insert(req.body)
@@ -29,30 +42,34 @@ router.post("/projects", validateProjectData, (req, res) => {
         })
 })
 
-// GET PROJECT BY ID
-router.get("/projects/:id", (req, res) => {
-    projects.get(req.params.id)
+// DELETE PROJECT
+router.delete("/projects/:id", validateProjectId, (req, res) => {
+    projects.remove(req.params.id)
         .then((project) => {
-            res.json(project)
-        })
-        .catch(() => {
-            res.status(500).json({
-                message: "There was an error retrieving this project.",
-            })
-        })
-})
-
-// GET PROJECTS
-router.get("/projects/:id/actions", validateProjectId, (req, res) => {
-    projects.getProjectActions(req.params.id)
-        .then((actions) => {
-            res.json(actions)
+            res.json({
+                message: "Project successfully deleted.",
+            });
         })
         .catch((err) => {
             res.status(500).json({
-                message: "There was an error retrieving this project's actions.",
-            })
+                message: "Error deleting project. Please try again.",
+            });
+        });
+});
+
+// UPDATE PROJECT
+router.put("/projects/:id", validateProjectId, validateProjectData, (req, res) => {
+    projects.update(req.params.id, req.body)
+        .then((project) => {
+            res.json(project);
         })
-})
+        .catch((err) => {
+            res.status(500).json({
+                message: "Error updating project. Please try again.",
+            });
+        });
+}
+);
+
 
 module.exports = router

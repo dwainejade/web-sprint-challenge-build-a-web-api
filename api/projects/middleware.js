@@ -15,13 +15,13 @@ function validateProjectId(req, res, next) {
                 next();
             } else {
                 res.status(404).json({
-                    message: `No project with ID of ${req.params.id} can be found.`,
+                    message: `No project ${req.params.id} can not be found.`,
                 });
             }
         })
         .catch((err) => {
             res.status(500).json({
-                message: `There was an error retrieving the project with ID ${req.params.id}.`,
+                message: `There was an error retrieving project ${req.params.id}.`,
             });
         });
 }
