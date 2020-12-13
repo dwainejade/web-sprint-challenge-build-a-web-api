@@ -1,7 +1,19 @@
-const express = require('express');
+const express = require('express')
+const cors = require("cors")
+const welcomeRouter = require("../welcome/welcomeRouter")
+const actionsRouter = require("./actions/actions-router")
+const projectsRouter = require("./projects/projects-router");
+
 const server = express();
 
-// Complete your server here!
-// Do NOT `server.listen()` inside this file!
+server.use(express.json());
+server.use(cors())
+server.use(welcomeRouter);
+server.use(projectsRouter);
+server.use(actionsRouter);
 
-module.exports = server;
+server.get("/", (req, res) => {
+    res.json({
+        message: "Started from the bottom",
+    });
+});
