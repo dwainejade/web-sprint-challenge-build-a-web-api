@@ -63,7 +63,7 @@ router.delete("/actions/:id", validateActionId, (req, res) => {
 router.put("/actions/:id", validateActionData, (req, res)=>{
     actions.update(req.params.id, req.body)
         .then((action)=>{
-            res.status(201).json(action)
+            res.json(action)
         })
         .catch(() => {
             res.status(500).json({
