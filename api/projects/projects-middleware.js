@@ -1,4 +1,4 @@
-const projects = require("../projects/projects-model");
+const projects = require("./projects-model");
 
 
 module.exports = {

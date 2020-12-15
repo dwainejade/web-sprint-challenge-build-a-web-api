@@ -1,7 +1,7 @@
 const express = require("express")
 const router = express.Router()
 const projects = require("../projects/projects-model")
-const { validateProjectId, validateProjectData } = require("./middleware")
+const { validateProjectId, validateProjectData } = require("./projects-middleware")
 
 // GET ALL PROJECTS
 router.get("/projects", (req, res) => {
@@ -70,6 +70,20 @@ router.put("/projects/:id", validateProjectId, validateProjectData, (req, res) =
         });
 }
 );
+
+// GET PROJECT ACTIONS
+router.get("/projects/:id/actions", validateProjectId, (req, res) => {
+    projects
+        .getProjectActions(req.params.id)
+        .then((actions) => {
+            res.json(actions);
+        })
+        .catch((err) => {
+            res.status(500).json({
+                message: "There was an error retrieving this project's actions.",
+            });
+        });
+});
 
 
 module.exports = router
