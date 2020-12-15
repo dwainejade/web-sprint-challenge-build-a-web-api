@@ -1,5 +1,6 @@
 require("dotenv").config();
 const express = require("express");
+const cors = require("cors")
 const welcomeRouter = require("./welcome/welcomeRouter")
 const projectsRouter = require("./api/projects/projects-router");
 const actionsRouter = require("./api/actions/actions-router");
@@ -8,6 +9,7 @@ const server = express();
 const port = process.env.PORT || 5000;
 
 server.use(express.json());
+server.use(cors())
 server.use(welcomeRouter);
 server.use(projectsRouter);
 server.use(actionsRouter);
